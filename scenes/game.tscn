@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cm8fnt2ncq0qx"]
+
+[ext_resource type="Script" uid="uid://dkt3q77ugn48g" path="res://scripts/Game.cs" id="1_uwrxv"]
+
+[node name="Game" type="Control" unique_id=1964499026]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uwrxv")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1484263877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer" unique_id=487380718]
+layout_mode = 2
+columns = 8
