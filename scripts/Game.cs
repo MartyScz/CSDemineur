@@ -15,6 +15,7 @@ public partial class Game : Control
     // Référence vers le plateau logique de la partie
     private Board _board;
 
+
     // Initialise le jeu lorsque le noeud est prêt dans la scène
     public override void _Ready()
     {
@@ -35,21 +36,34 @@ public partial class Game : Control
     private void CreateGrid()
     {
         // Boucle qui créer les cases du plateau
-        for (int i = 0; i < _rows * _columns; i++)
+        for (int row = 0; row < _rows; row++)
         {
-            // Crée un nouveau bouton
-            Button button = new Button
+            for (int column = 0; column < _columns; column++)
             {
-                // "?" est la valeur de Text
-                Text = "?",
+                // Récupère la case logique correspondant aux coordonnées du bouton bouton en cours de création
+                Case gameCase = _board.GetCase(row, column);
 
-                // Taille minimale du bouton
-                CustomMinimumSize = new Vector2(40, 40)
-            };
+                // Crée un nouveau bouton
+                Button button = new Button
+                {
+                    // "?" est la valeur de Text
+                    Text = "?",
+                    // Taille minimale du bouton
+                    CustomMinimumSize = new Vector2(40, 40)
+                };
 
-            // Donne ce bouton à la grille comme enfant
-            _grid.AddChild(button);        
+                // Relie le clic du bouton à la case logique correspondante
+                button.Pressed += () => OnCasePressed(gameCase);
+
+                // Donne ce bouton à la grille comme enfant
+                _grid.AddChild(button);        
+            }
         }
+    }
+
+    // Reçoit et traite la case logique correspondant au bouton cliqué 
+    private void OnCasePressed(Case gameCase)
+    {
     }
 
 }

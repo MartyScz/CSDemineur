@@ -33,4 +33,10 @@ public class Board
         }
     }
 
+    // Méthode pour faire le lien entre le Board et le reste du jeu
+    public Case GetCase(int row, int column)
+    {
+        return _cases[row, column];
+    }
+
 }
