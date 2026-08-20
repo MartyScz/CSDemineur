@@ -15,6 +15,8 @@ public partial class Game : Control
     // Référence vers le plateau logique de la partie
     private Board _board;
 
+    // Ressource Godot qui contient le modèle prêt à être instancié 
+    private PackedScene _caseViewScene;
 
     // Initialise le jeu lorsque le noeud est prêt dans la scène
     public override void _Ready()
@@ -28,8 +30,12 @@ public partial class Game : Control
         // Initialise le plateau logique
         _board = new Board(_rows, _columns);
 
+        // Initialise la scène de la case
+        _caseViewScene = GD.Load<PackedScene>("res://scenes/case_view.tscn");
+
         // Génère les cases qui composent le plateau
         CreateGrid();
+
     }
 
     // Méthode pour crée les cases du plateau
@@ -40,30 +46,32 @@ public partial class Game : Control
         {
             for (int column = 0; column < _columns; column++)
             {
-                // Récupère la case logique correspondant aux coordonnées du bouton bouton en cours de création
+                // Récupère la case logique correspondant aux coordonnées de la case en cours de création
                 Case gameCase = _board.GetCase(row, column);
 
-                // Crée un nouveau bouton
-                Button button = new Button
-                {
-                    // "?" est la valeur de Text
-                    Text = "?",
-                    // Taille minimale du bouton
-                    CustomMinimumSize = new Vector2(40, 40)
-                };
+                // Crée une instance de la scène visuelle CaseView
+                CaseView caseView = _caseViewScene.Instantiate<CaseView>();
 
-                // Relie le clic du bouton à la case logique correspondante
-                button.Pressed += () => OnCasePressed(gameCase);
+                // Associe la case visuelle à sa case logique correspondante
+                caseView.Initialize(gameCase);
 
-                // Donne ce bouton à la grille comme enfant
-                _grid.AddChild(button);        
+                // Relie le clic de la case visuelle à sa case logique correspondante
+                caseView.Pressed += () => OnCasePressed(gameCase, caseView );
+
+                // Ajoute la CaseView à la grille pour l'afficher
+                _grid.AddChild(caseView);        
             }
         }
     }
 
     // Reçoit et traite la case logique correspondant au bouton cliqué 
-    private void OnCasePressed(Case gameCase)
+    private void OnCasePressed(Case gameCase, CaseView caseView)
     {
+        // Marque la case logique comme révélée
+        gameCase.IsRevealed = true;
+        
+        // Met à jour l'affichage de la case révélée
+        caseView.ShowRevealed();
     }
 
 }

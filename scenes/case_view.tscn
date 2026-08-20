@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bf46yiapomke2"]
+
+[ext_resource type="Script" uid="uid://dunliicmevsyx" path="res://scripts/CaseView.cs" id="1_0gevg"]
+[ext_resource type="Texture2D" uid="uid://blo7r7jdfbibj" path="res://assets/sprites/case_remplie.png" id="1_xm4jq"]
+[ext_resource type="Texture2D" uid="uid://b777llc3kw5xo" path="res://assets/sprites/case_vide.png" id="3_3145f"]
+
+[node name="CaseView" type="TextureButton" unique_id=1838329694]
+custom_minimum_size = Vector2(40, 40)
+custom_maximum_size = Vector2(40, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_xm4jq")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_0gevg")
+_revealedTexture = ExtResource("3_3145f")
+
+[node name="Content" type="TextureRect" parent="." unique_id=867738579]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
