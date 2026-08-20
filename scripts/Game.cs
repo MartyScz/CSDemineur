@@ -12,6 +12,9 @@ public partial class Game : Control
     // Nombre de colonnes
     private int _columns = 8;
 
+    // Nombre de mines de la partie
+    private int _mineCount = 10;
+
     // Référence vers le plateau logique de la partie
     private Board _board;
 
@@ -28,7 +31,7 @@ public partial class Game : Control
         _grid.Columns = _columns;
 
         // Initialise le plateau logique
-        _board = new Board(_rows, _columns);
+        _board = new Board(_rows, _columns, _mineCount);
 
         // Initialise la scène de la case
         _caseViewScene = GD.Load<PackedScene>("res://scenes/case_view.tscn");

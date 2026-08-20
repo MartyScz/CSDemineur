@@ -11,14 +11,23 @@ public class Board
     // Tableau 2D
     private Case[,] _cases;
 
-    // Initialise le plateau avec son nombre de lignes et de colonnes
-    public Board(int rows, int columns)
+    // Les mines
+    private int _mineCount;
+
+    // Indique si les mines ont déja été placées sur le plateau
+    private bool _minesPlaced = false;
+
+    // Initialise le plateau avec son nombre de lignes, de colonnes et de mines
+    public Board(int rows, int columns, int mineCount)
     {
-        // lignes
+        // Lignes
         _rows = rows;
 
-        // colonnes
+        // Colonnes
         _columns = columns;
+
+        // Mines
+        _mineCount = mineCount;
 
         // Création du tableau 2D
         _cases = new Case[_rows, _columns];
@@ -28,15 +37,20 @@ public class Board
         {
             for (int column = 0; column < _columns; column++)
             {
-                _cases[row, column] = new Case();
+                _cases[row, column] = new Case(row, column);
             }
         }
     }
 
-    // Méthode pour faire le lien entre le Board et le reste du jeu
+    // Retourne la case située à la ligne et à la colonne demandées
     public Case GetCase(int row, int column)
     {
         return _cases[row, column];
     }
 
+    // Place les mines à un écart de 8 case après le clic
+    public void PlaceMines(int row, int column)
+    {
+        
+    }
 }
