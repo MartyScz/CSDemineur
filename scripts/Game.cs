@@ -1,5 +1,5 @@
 using Godot;
-
+using System;
 
 public partial class Game : Control
 {
@@ -70,6 +70,10 @@ public partial class Game : Control
     // Reçoit et traite la case logique correspondant au bouton cliqué 
     private void OnCasePressed(Case gameCase, CaseView caseView)
     {
+        // Place les mines sur le plateau
+        _board.PlaceMines(gameCase.Row, gameCase.Column);
+
+
         // Marque la case logique comme révélée
         gameCase.IsRevealed = true;
         
