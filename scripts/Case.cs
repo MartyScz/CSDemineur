@@ -7,6 +7,7 @@ public partial class Case : Node2D
     public bool HasMine { get; set; }
     public int AdjacentMines { get; set; }
     public bool HasFlag { get; set; }
+    
     public int Row { get; set; }
     public int Column { get; set; }
 

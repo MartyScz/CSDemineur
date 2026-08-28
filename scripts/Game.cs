@@ -73,6 +73,11 @@ public partial class Game : Control
         // Place les mines sur le plateau
         _board.PlaceMines(gameCase.Row, gameCase.Column);
 
+        // Révèle cette position et déclenche éventuellement une cascade
+        _board.RevealCase(gameCase.Row, gameCase.Column);
+
+        // TODO: Vérifie le nombre de mines voisines. Enlever après test validé
+        GD.Print($"Case [{gameCase.Row}, {gameCase.Column}] : {gameCase.AdjacentMines} mine(s) voisine(s)");
 
         // Marque la case logique comme révélée
         gameCase.IsRevealed = true;

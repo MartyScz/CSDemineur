@@ -1,5 +1,7 @@
 
 using System;
+using System.Data;
+using System.Security.Principal;
 using Godot;
 
 public class Board
@@ -101,8 +103,109 @@ public class Board
             minesPlaced++;          
         }
 
+        CalculateAdjacentMines();
+
         // Toutes les mines ont été placées
         _minesPlaced = true;
+    }
 
+    // Calcule le nombre de mines adjacentes pour chaque case du plateau
+    private void CalculateAdjacentMines()
+    {
+        //  Parcourt toutes les lignes du plateau
+        for (int row = 0; row < _rows; row++)
+        {
+            // Parcourt toutes les colonnes du plateau
+            for (int column = 0; column < _columns; column++)
+            {
+                // Compte le nombre de mines autour de la case actuelle
+                int adjacentMines = 0;
+                
+                // Parcourt les lignes voisines de la case actuelle
+                for (int neighborRow = row - 1; neighborRow <= row  + 1; neighborRow++)
+                {   
+                    // Parcourt les colonnes voisines de la case actuelle
+                    for (int neighborColumn = column - 1; neighborColumn <= column + 1; neighborColumn++)
+                    {
+
+                        // Vérifie que la position voisine reste dans les limites du plateau
+                        bool isInsideBoard = neighborRow >= 0 && neighborRow < _rows && neighborColumn >= 0 && neighborColumn <_columns;
+
+                        // Ignore cette position si elle se trouve hors du plateau
+                        if (!isInsideBoard)
+                        {
+                            continue;
+                        }
+
+                        // Vérifie si la position voisine correspond à la case actuellement analysée
+                        bool isCurrentCase = neighborRow == row && neighborColumn == column;
+
+                        // Ignore la case elle-même :  elle ne doit pas être comptée comme voisine
+                        if (isCurrentCase)
+                        {
+                            continue;
+                        }
+
+                        // Compte la case voisine uniquement si elle contient une mine
+                        if (_cases[neighborRow, neighborColumn].HasMine)
+                        {
+                            adjacentMines++;
+                        }
+                    }
+                }
+                // Enregistre le nombre total de mines trouvées autour de la case
+                _cases[row, column].AdjacentMines = adjacentMines;
+            }
+        }
+    }
+
+    // Révèle une case et propage la révélation si elle n'a aucune mine adjacente
+    public void RevealCase(int row, int column)
+    {
+        // Récupère la case située aux coordonnées reçues
+        Case currentCase = _cases[row, column];
+
+        // Arrête si la case est déjà révélée
+        if (currentCase.IsRevealed)
+        {
+            return;
+        }
+
+        // Marque la case révélée
+        currentCase.IsRevealed = true;
+
+        // Arrête la propagation si la case actuelle possède au moins une mine adjacente
+        if (currentCase.AdjacentMines != 0)
+        {
+            return;
+        }
+
+        // Parcourt les lignes voisines de la case actuelle
+        for (int neighborRow = row - 1; neighborRow <= row + 1; neighborRow++)
+        {
+            // Parcourt les colonnes voisines de la case actuelle
+            for (int neighborColumn = column - 1; neighborColumn <= column +1; neighborColumn++)
+            {
+                // Vérifie que la position voisine reste dans les limites du plateau
+                bool isInsideBoard = neighborRow >= 0 && neighborRow < _rows && neighborColumn >= 0 && neighborColumn < _columns;
+
+                // Ignore les positions situées hors du plateau
+                if (!isInsideBoard)
+                {
+                    continue;
+                }
+
+                // Vérifie si la position correspond à la case actuellement révélée
+                bool isCurrentCase = neighborRow == row && neighborColumn == column;
+
+                // Ignore la case elle-même :  elle ne doit pas être traitée comme voisine
+                if (isCurrentCase)
+                {
+                    continue;
+                }
+
+                RevealCase(neighborRow, neighborColumn);
+            }
+        }
     }
 }
