@@ -1,5 +1,6 @@
 
 
+using System.Net;
 using Godot;
 
 
@@ -35,4 +36,12 @@ public partial class CaseView : TextureButton
         TextureNormal = _revealedTexture;
     }
 
+    // Met à jour l'état visuel de la case selon son état logique
+    public void Refresh()
+    {
+        if (_gameCase.IsRevealed)
+        {
+            ShowRevealed();
+        }
+    }
 }
