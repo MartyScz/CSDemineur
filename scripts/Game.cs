@@ -59,7 +59,7 @@ public partial class Game : Control
                 caseView.Initialize(gameCase);
 
                 // Relie le clic de la case visuelle à sa case logique correspondante
-                caseView.Pressed += () => OnCasePressed(gameCase, caseView );
+                caseView.Pressed += () => OnCasePressed(gameCase);
 
                 // Ajoute la CaseView à la grille pour l'afficher
                 _grid.AddChild(caseView);        
@@ -68,7 +68,7 @@ public partial class Game : Control
     }
 
     // Reçoit et traite la case logique correspondant au bouton cliqué 
-    private void OnCasePressed(Case gameCase, CaseView caseView)
+    private void OnCasePressed(Case gameCase)
     {
         // Place les mines sur le plateau
         _board.PlaceMines(gameCase.Row, gameCase.Column);
@@ -76,14 +76,29 @@ public partial class Game : Control
         // Révèle cette position et déclenche éventuellement une cascade
         _board.RevealCase(gameCase.Row, gameCase.Column);
 
+        // Parcourt toutes les CaseView
+        RefreshGrid();
+
         // TODO: Vérifie le nombre de mines voisines. Enlever après test validé
         GD.Print($"Case [{gameCase.Row}, {gameCase.Column}] : {gameCase.AdjacentMines} mine(s) voisine(s)");
 
         // Marque la case logique comme révélée
         gameCase.IsRevealed = true;
         
-        // Met à jour l'affichage de la case révélée
-        caseView.ShowRevealed();
     }
 
+    // Met à jour l'affichage de toutes les cases de la grille
+    private void RefreshGrid()
+    {
+        // Parcourt tous les enfants du GridContainer
+        foreach (Node child in _grid.GetChildren())
+        {
+            // Vérifie si l'enfant actuel est une CaseView
+            if (child is CaseView caseView)
+            {
+                // Met à jour l'affichage de cette CaseView selon sa Case logique
+                caseView.Refresh();
+            }
+        }
+    }
 }
