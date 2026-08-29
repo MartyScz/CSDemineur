@@ -174,6 +174,12 @@ public class Board
         // Marque la case révélée
         currentCase.IsRevealed = true;
 
+        // Arrête la propagation si la case contient une mine
+        if (currentCase.HasMine)
+        {
+            return;
+        }
+        
         // Arrête la propagation si la case actuelle possède au moins une mine adjacente
         if (currentCase.AdjacentMines != 0)
         {

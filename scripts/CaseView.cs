@@ -48,7 +48,6 @@ public partial class CaseView : TextureButton
         {
             // Affiche le don d'une case révélée
             ShowRevealed();
-
             // Affiche un chiffre uniquement si une ou plusieurs mines sont adjacentes
             if (_gameCase.AdjacentMines > 0)
             {
@@ -59,6 +58,5 @@ public partial class CaseView : TextureButton
                 _content.Texture = _numberTextures[textureIndex];
             }
         }
-
     }
 }
