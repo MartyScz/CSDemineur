@@ -18,6 +18,10 @@ public partial class CaseView : TextureButton
     [Export]
     private Texture2D _mineTexture;
 
+    // Contient la texture du drapeau
+    [Export]
+    private Texture2D _flagTexture;
+
     // Référence vers le TextureRect utilisé pour afficher le contenu de la case
     private TextureRect _content;
 
@@ -47,29 +51,45 @@ public partial class CaseView : TextureButton
     // Met à jour l'état visuel de la case selon son état logique
     public void Refresh()
     {
-        // Met à jour l'affichage uniquement si la case est révélée
-        if (_gameCase.IsRevealed)
+        // Vérifie si la case n'est pas révélée
+        if (!_gameCase.IsRevealed)
         {
-            // Affiche le fond d'une case révélée
-            ShowRevealed();
-
-            // Affiche une mine si la case en contient une
-            if (_gameCase.HasMine)
+            // Affiche un drapeau si la case en possède un
+            if (_gameCase.HasFlag)
             {
-                _content.Texture = _mineTexture;
-
-                return;
+                _content.Texture = _flagTexture;
+            }
+            // Sinon retire tout contenu affiché
+            else
+            {
+                _content.Texture = null;
             }
 
-            // Affiche un chiffre uniquement si une ou plusieurs mines sont adjacentes
-            if (_gameCase.AdjacentMines > 0)
-            {
-                // Convertit le nombre de mines adjacentes en index du tableau de textures
-                int textureIndex = _gameCase.AdjacentMines - 1;
+            return;
+        }
 
-                // Affiche la texture du chiffre correspondant
-                _content.Texture = _numberTextures[textureIndex];
-            }
+        // Affiche le fond d'une case révélée
+        ShowRevealed();
+
+        // Réinitialise le contenu visuel avant d'afficher une mine ou un chiffre
+        _content.Texture = null;
+
+        // Affiche une mine si la case en contient une
+        if (_gameCase.HasMine)
+        {
+            _content.Texture = _mineTexture;
+
+            return;
+        }
+
+        // Affiche un chiffre uniquement si une ou plusieurs mines sont adjacentes
+        if (_gameCase.AdjacentMines > 0)
+        {
+            // Convertit le nombre de mines adjacentes en index du tableau de textures
+            int textureIndex = _gameCase.AdjacentMines - 1;
+
+            // Affiche la texture du chiffre correspondant
+            _content.Texture = _numberTextures[textureIndex];
         }
     }
 }

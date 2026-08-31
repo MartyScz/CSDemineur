@@ -61,6 +61,9 @@ public partial class Game : Control
                 // Relie le clic de la case visuelle à sa case logique correspondante
                 caseView.Pressed += () => OnCasePressed(gameCase);
 
+                // Relie les événements de la souris de la CaseView à sa case logique
+                caseView.GuiInput += (InputEvent inputEvent) => OnCaseGuiInput(inputEvent, gameCase);
+
                 // Ajoute la CaseView à la grille pour l'afficher
                 _grid.AddChild(caseView);        
             }
@@ -80,11 +83,7 @@ public partial class Game : Control
         RefreshGrid();
 
         // TODO: Vérifie le nombre de mines voisines. Enlever après test validé
-        GD.Print($"Case [{gameCase.Row}, {gameCase.Column}] : {gameCase.AdjacentMines} mine(s) voisine(s)");
-
-        // Marque la case logique comme révélée
-        gameCase.IsRevealed = true;
-        
+        GD.Print($"Case [{gameCase.Row}, {gameCase.Column}] : {gameCase.AdjacentMines} mine(s) voisine(s)");       
     }
 
     // Met à jour l'affichage de toutes les cases de la grille
@@ -98,6 +97,24 @@ public partial class Game : Control
             {
                 // Met à jour l'affichage de cette CaseView selon sa Case logique
                 caseView.Refresh();
+            }
+        }
+    }
+
+    // Gére les événements de souris sur une case et pose ou retire un drapeau lors d'un clic droit
+    private void OnCaseGuiInput(InputEvent inputEvent, Case gameCase)
+    {
+        // Vérifie que l'événement reçu correspond à l'utilisation d'un bouton de la souris
+        if (inputEvent is InputEventMouseButton mouseButton)
+        {
+            // Vérifie que le bouton utilisé est le clic droit et qu'il vient d'être enfoncé
+            if (mouseButton.ButtonIndex == MouseButton.Right && mouseButton.Pressed)
+            {
+                // Demande au Board de poser ou retirer le drapeau sur cette case
+                _board.ToggleFlag(gameCase.Row, gameCase.Column);
+
+                // Met à jour l'affichage de la grille
+                RefreshGrid();
             }
         }
     }

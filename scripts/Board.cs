@@ -21,6 +21,9 @@ public class Board
     // Indique si les mines ont déja été placées sur le plateau
     private bool _minesPlaced = false;
 
+    // Indique si la partie est fini
+    private bool _isGameOver = false;
+
     // Initialise le plateau avec son nombre de lignes, de colonnes et de mines
     public Board(int rows, int columns, int mineCount)
     {
@@ -162,6 +165,12 @@ public class Board
     // Révèle une case et propage la révélation si elle n'a aucune mine adjacente
     public void RevealCase(int row, int column)
     {
+        // Empêche toute nouvelle révélation de case si la partie est terminée
+        if (_isGameOver)
+        {
+            return;
+        }
+
         // Récupère la case située aux coordonnées reçues
         Case currentCase = _cases[row, column];
 
@@ -171,12 +180,20 @@ public class Board
             return;
         }
 
+        // Arrête si la case a un drapeau
+        if (currentCase.HasFlag)
+        {
+            return;
+        }
+        
         // Marque la case révélée
         currentCase.IsRevealed = true;
 
-        // Arrête la propagation si la case contient une mine
+        // Termine la partie uniquement si cette case contient une mine
         if (currentCase.HasMine)
         {
+            // Arrête la partie
+            _isGameOver = true;
             return;
         }
         
@@ -213,5 +230,27 @@ public class Board
                 RevealCase(neighborRow, neighborColumn);
             }
         }
+    }
+
+    // Bascule l'état de drapeau sur une case
+    public void ToggleFlag(int row, int column)
+    {
+        // Arrête la méthode si la partie est terminée
+        if (_isGameOver)
+        {
+            return;
+        }
+
+        // Récupère la case située aux coordonnées reçues
+        Case currentCase = _cases[row, column];
+
+        // Arrête la méthode si la case est révélée
+        if (currentCase.IsRevealed)
+        {
+            return;
+        }
+
+        // Inverse l'état du drapeau : false devient true et true devient false
+        currentCase.HasFlag = !currentCase.HasFlag;
     }
 }
