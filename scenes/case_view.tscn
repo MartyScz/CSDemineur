@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c046rqe16psjy" path="res://assets/sprites/chiffre_6.png" id="9_bklmw"]
 [ext_resource type="Texture2D" uid="uid://b83exejxlrnii" path="res://assets/sprites/chiffre_7.png" id="10_na411"]
 [ext_resource type="Texture2D" uid="uid://de66q6kyowilv" path="res://assets/sprites/chiffre_8.png" id="11_6hgpl"]
+[ext_resource type="Texture2D" uid="uid://bw2w8wkmb1285" path="res://assets/sprites/Mine.png" id="12_acrdg"]
 
 [node name="CaseView" type="TextureButton" unique_id=1838329694]
 custom_minimum_size = Vector2(40, 40)
@@ -23,6 +24,7 @@ stretch_mode = 0
 script = ExtResource("1_0gevg")
 _revealedTexture = ExtResource("3_3145f")
 _numberTextures = Array[Texture2D]([ExtResource("4_e508b"), ExtResource("5_acrdg"), ExtResource("6_022nf"), ExtResource("7_0j4ou"), ExtResource("8_m8gy3"), ExtResource("9_bklmw"), ExtResource("10_na411"), ExtResource("11_6hgpl")])
+_mineTexture = ExtResource("12_acrdg")
 
 [node name="Content" type="TextureRect" parent="." unique_id=867738579]
 layout_mode = 1

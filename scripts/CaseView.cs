@@ -14,6 +14,10 @@ public partial class CaseView : TextureButton
     [Export]
     private Texture2D[] _numberTextures;
 
+    // Contient la texture de la mine 
+    [Export]
+    private Texture2D _mineTexture;
+
     // Référence vers le TextureRect utilisé pour afficher le contenu de la case
     private TextureRect _content;
 
@@ -46,8 +50,17 @@ public partial class CaseView : TextureButton
         // Met à jour l'affichage uniquement si la case est révélée
         if (_gameCase.IsRevealed)
         {
-            // Affiche le don d'une case révélée
+            // Affiche le fond d'une case révélée
             ShowRevealed();
+
+            // Affiche une mine si la case en contient une
+            if (_gameCase.HasMine)
+            {
+                _content.Texture = _mineTexture;
+
+                return;
+            }
+
             // Affiche un chiffre uniquement si une ou plusieurs mines sont adjacentes
             if (_gameCase.AdjacentMines > 0)
             {
