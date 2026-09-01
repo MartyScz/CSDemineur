@@ -192,8 +192,12 @@ public class Board
         // Termine la partie uniquement si cette case contient une mine
         if (currentCase.HasMine)
         {
-            // Arrête la partie
+            // Marque immédiatement la partie comme terminée
             _isGameOver = true;
+
+            // Révèle toutes les mines du plateau
+            RevealAllMines();
+            
             return;
         }
         
@@ -253,4 +257,26 @@ public class Board
         // Inverse l'état du drapeau : false devient true et true devient false
         currentCase.HasFlag = !currentCase.HasFlag;
     }
+
+    // Révèle les mines quand la partie est perdue
+    private void RevealAllMines()
+    {
+        // Parcourt toutes les ligne du plateau
+        for (int row = 0; row < _rows; row++)
+        {
+            // Parcourt toutes les colonnes du plateau
+            for (int column = 0; column < _columns; column++)
+            {
+                // Récupère la case actuellement parcourue
+                Case currentCase = _cases[row, column];
+
+                // Révèle la case uniquement si elle contient une mine
+                if (currentCase.HasMine)
+                {
+                    currentCase.IsRevealed = true;
+                }
+            }
+        }
+    }
+
 }
