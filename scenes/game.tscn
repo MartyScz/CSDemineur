@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cm8fnt2ncq0qx"]
 
 [ext_resource type="Script" uid="uid://dkt3q77ugn48g" path="res://scripts/Game.cs" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://nw4lwg5pqjad" path="res://assets/sprites/overlay_panel.png" id="2_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://dptpcjqkgtpq6" path="res://assets/sprites/bouton_normal.png" id="3_lnu2h"]
 
 [node name="Game" type="Control" unique_id=1964499026]
 layout_mode = 3
@@ -22,3 +24,85 @@ grow_vertical = 2
 [node name="GridContainer" type="GridContainer" parent="CenterContainer" unique_id=487380718]
 layout_mode = 2
 columns = 8
+
+[node name="EndGameOverlay" type="Control" parent="." unique_id=1559469309]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="EndGameOverlay" unique_id=904163075]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelBackground" type="TextureRect" parent="EndGameOverlay/CenterContainer" unique_id=1334167972]
+layout_mode = 2
+texture = ExtResource("2_yqjtg")
+
+[node name="ContentCenter" type="CenterContainer" parent="EndGameOverlay/CenterContainer/PanelBackground" unique_id=745038252]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter" unique_id=463496620]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter/VBoxContainer" unique_id=1139873303]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Perdu !"
+horizontal_alignment = 1
+
+[node name="ReplayButton" type="TextureButton" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter/VBoxContainer" unique_id=981785060]
+layout_mode = 2
+texture_normal = ExtResource("3_lnu2h")
+
+[node name="ReplayLabel" type="Label" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter/VBoxContainer/ReplayButton" unique_id=978493304]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Rejouer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButton" type="TextureButton" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter/VBoxContainer" unique_id=1159244172]
+layout_mode = 2
+texture_normal = ExtResource("3_lnu2h")
+
+[node name="MenuLabel" type="Label" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter/VBoxContainer/MenuButton" unique_id=1248934472]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Menu principal"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="TextureButton" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter/VBoxContainer" unique_id=1190687106]
+layout_mode = 2
+texture_normal = ExtResource("3_lnu2h")
+
+[node name="QuitLabel" type="Label" parent="EndGameOverlay/CenterContainer/PanelBackground/ContentCenter/VBoxContainer/QuitButton" unique_id=1074602761]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quitter"
+horizontal_alignment = 1
+vertical_alignment = 1
